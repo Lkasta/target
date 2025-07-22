@@ -1,13 +1,12 @@
-
-import { colors, fontFamily } from '@/theme'
-import { StyleSheet } from 'react-native'
+import { colors, fontFamily } from "@/theme";
+import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
   container: {
-    width: '100%',
+    width: "100%",
     height: 324,
     paddingHorizontal: 24,
-    justifyContent: 'flex-end',
+    justifyContent: "flex-end",
     paddingBottom: 18,
     gap: 24,
   },
@@ -16,4 +15,15 @@ export const styles = StyleSheet.create({
     color: colors.white,
     fontFamily: fontFamily.regular,
   },
-})
+  total: {
+    fontSize: 32,
+    color: colors.white,
+    fontFamily: fontFamily.medium,
+  },
+  summary: {
+    width: "100%",
+    gap: 12,
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+});
