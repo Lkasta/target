@@ -3,6 +3,7 @@
     "name": "target",
     "slug": "target",
     "version": "1.0.0",
+    "scheme": "target",
     "android": {
       "package": "com.lkasta.target",
       "edgeToEdgeEnabled": true,
@@ -14,6 +15,10 @@
     "ios": {
       "bundleIdentifier": "com.lkasta.target",
       "icon": "./assets/ios-icon.png"
-    }
+    },
+    "plugins": [
+      "expo-router",
+      "expo-font"
+    ]
   }
 }
