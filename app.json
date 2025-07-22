@@ -1,0 +1,19 @@
+{
+  "expo": {
+    "name": "target",
+    "slug": "target",
+    "version": "1.0.0",
+    "android": {
+      "package": "com.lkasta.target",
+      "edgeToEdgeEnabled": true,
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "bacgroundColor": "#3D44CD"
+      }
+    },
+    "ios": {
+      "bundleIdentifier": "com.lkasta.target",
+      "icon": "./assets/ios-icon.png"
+    }
+  }
+}
