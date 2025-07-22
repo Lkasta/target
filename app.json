@@ -8,7 +8,7 @@
       "edgeToEdgeEnabled": true,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "bacgroundColor": "#3D44CD"
+        "backgroundColor": "#3D44CD"
       }
     },
     "ios": {
