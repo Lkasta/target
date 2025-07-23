@@ -29,6 +29,7 @@ export default function Transaction() {
       await transactionsDB.create({
         target_id: Number(params.id),
         amount: type === TransactionTypes.Output ? amount * -1 : amount,
+        observation: observation
       });
       router.back();
     } catch (error) {
@@ -44,7 +45,11 @@ export default function Transaction() {
       />
       <View style={{ marginTop: 32, gap: 24 }}>
         <TransactionType selected={type} onChange={setType} />
-        <CurrencyInput label="Valor (R$)" value={amount} onChangeValue={setAmount} />
+        <CurrencyInput
+          label="Valor (R$)"
+          value={amount}
+          onChangeValue={setAmount}
+        />
 
         <Input
           label="Motivo"
