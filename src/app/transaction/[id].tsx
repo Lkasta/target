@@ -7,7 +7,7 @@ import { useTransactionsDatabase } from "@/database/useTransactionsDatabase";
 import { TransactionTypes } from "@/utils/TransactionTypes";
 import { router, useLocalSearchParams } from "expo-router";
 import { useState } from "react";
-import { Alert, View } from "react-native";
+import { Alert, StatusBar, View } from "react-native";
 
 export default function Transaction() {
   const [amount, setAmount] = useState(0);
@@ -39,6 +39,7 @@ export default function Transaction() {
 
   return (
     <View style={{ flex: 1, padding: 24 }}>
+      <StatusBar barStyle="dark-content" />
       <PageHeader
         title="Nova transação"
         subtitle="A cada valor guardado você fica mais próximo da sua meta. Se esforce para guardar e evitar retirar."
