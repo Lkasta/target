@@ -98,7 +98,7 @@ export default function InProgress() {
   async function remove(id: string) {
     try {
       await transactionsDB.remove(Number(id));
-      fetchData;
+      fetchData();
     } catch (error) {}
   }
 
