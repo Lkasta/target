@@ -12,6 +12,7 @@ import { router, useFocusEffect, useLocalSearchParams } from "expo-router";
 import { useCallback, useState } from "react";
 import { View } from "react-native";
 import { useTransactionsDatabase } from "@/database/useTransactionsDatabase";
+import dayjs from "dayjs";
 
 export default function InProgress() {
   const [transactions, setTransactions] = useState<TransactionProps[]>([]);
@@ -56,7 +57,7 @@ export default function InProgress() {
         response.map((resp) => ({
           id: String(resp.id),
           value: numberToCurrency(resp.amount),
-          date: String(resp.created_at),
+          date: dayjs(resp.created_at).format("DD/MM/YYYY HH:mm"),
           description: resp.observation,
           type:
             resp.amount < 0 ? TransactionTypes.Output : TransactionTypes.Input,
