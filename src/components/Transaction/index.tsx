@@ -18,7 +18,6 @@ type Props = {
 };
 
 export function Transaction({ data, onRemove }: Props) {
-  console.log(data)
   return (
     <View style={styles.container}>
       <MaterialIcons

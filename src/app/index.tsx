@@ -32,7 +32,7 @@ export default function Index() {
         target: numberToCurrency(resp.amount),
       }));
     } catch (error) {
-      console.log(error);
+      console.warn(error);
       return [];
     }
   }

@@ -34,9 +34,10 @@ export default function Target() {
   async function create() {
     try {
       await targetDB.create({ name, amount });
-      console.log("Meta criada com sucesso!");
       router.back();
-    } catch (error) {}
+    } catch (error) {
+      console.warn(error);
+    }
   }
 
   async function fetchDetails(id: number) {
@@ -66,7 +67,7 @@ export default function Target() {
         },
       ]);
     } catch (error) {
-      console.warn("Erro ao atualizar meta!");
+      console.warn("Erro ao atualizar meta!", error);
       setIsProcessing(false);
     }
   }

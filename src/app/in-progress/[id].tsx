@@ -10,7 +10,7 @@ import { numberToCurrency } from "@/utils/numberToCurrency";
 import { TransactionTypes } from "@/utils/TransactionTypes";
 import { router, useFocusEffect, useLocalSearchParams } from "expo-router";
 import { useCallback, useState } from "react";
-import { View } from "react-native";
+import { Alert, View } from "react-native";
 import { useTransactionsDatabase } from "@/database/useTransactionsDatabase";
 import dayjs from "dayjs";
 
@@ -45,7 +45,7 @@ export default function InProgress() {
         percentage: response.percentage,
       });
     } catch (error) {
-      console.log(error);
+      console.warn(error);
     }
   }
 
@@ -72,8 +72,32 @@ export default function InProgress() {
     const fetchDetailsPromise = fetchDetails();
     const fetchTransitionsPromise = fetchTransitions();
 
-    await Promise.all([fetchDetailsPromise]);
+    await Promise.all([fetchDetailsPromise, fetchTransitionsPromise]);
     setIsFetching(false);
+  }
+
+  async function handleTransactionRemove(id: string) {
+    try {
+      Alert.alert("Atenção!", "Você realmente deseja remover essa transação?", [
+        {
+          text: "Não",
+          style: "cancel",
+        },
+        {
+          text: "Sim",
+          onPress: () => remove(id),
+        },
+      ]);
+    } catch (error) {
+      console.warn(error);
+    }
+  }
+
+  async function remove(id: string) {
+    try {
+      await transactionsDB.remove(Number(id));
+      fetchData;
+    } catch (error) {}
   }
 
   useFocusEffect(
@@ -102,7 +126,10 @@ export default function InProgress() {
         title="Transações"
         data={transactions}
         renderItem={({ item }) => (
-          <Transaction data={item} onRemove={() => {}} />
+          <Transaction
+            data={item}
+            onRemove={() => handleTransactionRemove(item.id)}
+          />
         )}
         emptyMessage="Nenhuma transação. Toque em nova transação para guardar seu primeiro dinheiro aqui."
       />
