@@ -11,24 +11,10 @@ import { TransactionTypes } from "@/utils/TransactionTypes";
 import { router, useFocusEffect, useLocalSearchParams } from "expo-router";
 import { useCallback, useState } from "react";
 import { View } from "react-native";
-
-const transactions: TransactionProps[] = [
-  {
-    id: "1",
-    value: "R$ 20,00",
-    date: "12/04/25",
-    type: TransactionTypes.Output,
-  },
-  {
-    id: "2",
-    value: "R$ 300,00",
-    date: "12/04/25",
-    description: "CDB de 110% no banco XPTO",
-    type: TransactionTypes.Input,
-  },
-];
+import { useTransactionsDatabase } from "@/database/useTransactionsDatabase";
 
 export default function InProgress() {
+  const [transactions, setTransactions] = useState<TransactionProps[]>([]);
   const [isFetching, setIsFetching] = useState(true);
   const [details, setDetails] = useState({
     name: "",
@@ -40,6 +26,7 @@ export default function InProgress() {
   const params = useLocalSearchParams<{ id: string }>();
 
   const targetDB = useTargetDatabase();
+  const transactionsDB = useTransactionsDatabase();
 
   async function fetchDetails() {
     try {
@@ -61,8 +48,28 @@ export default function InProgress() {
     }
   }
 
+  async function fetchTransitions() {
+    try {
+      const response = await transactionsDB.listByTargetId(Number(params.id));
+
+      setTransactions(
+        response.map((resp) => ({
+          id: String(resp.id),
+          value: numberToCurrency(resp.amount),
+          date: String(resp.created_at),
+          description: resp.observation,
+          type:
+            resp.amount < 0 ? TransactionTypes.Output : TransactionTypes.Input,
+        }))
+      );
+    } catch (error) {
+      console.warn(error);
+    }
+  }
+
   async function fetchData() {
     const fetchDetailsPromise = fetchDetails();
+    const fetchTransitionsPromise = fetchTransitions();
 
     await Promise.all([fetchDetailsPromise]);
     setIsFetching(false);
