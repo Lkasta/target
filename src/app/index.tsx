@@ -11,7 +11,11 @@ import { useCallback, useState } from "react";
 import { StatusBar, View } from "react-native";
 
 export default function Index() {
-  const [summary, setSummary] = useState<HomeHeaderProps>();
+  const [summary, setSummary] = useState<HomeHeaderProps>({
+    total: numberToCurrency(0),
+    input: { label: "Entradas", value: numberToCurrency(0) },
+    output: { label: "Saídas", value: numberToCurrency(0) },
+  });
   const [isFetching, setIsFetching] = useState(true);
   const [targets, setTargets] = useState<TargetProps[]>([]);
   const targetDB = useTargetDatabase();
