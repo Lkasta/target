@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useTargetDatabase } from "@/database/useTargetDatabase";
 
 import { Alert, View } from "react-native";
@@ -7,6 +7,7 @@ import { Button } from "@/components/Button";
 import { router, useLocalSearchParams } from "expo-router";
 import { PageHeader } from "@/components/PageHeader";
 import { CurrencyInput } from "@/components/CurrencyInput";
+import { TargetProps } from "@/components/Target";
 
 export default function Target() {
   const [isProcessing, setIsProcessing] = useState(false);
@@ -24,7 +25,7 @@ export default function Target() {
     setIsProcessing(true);
 
     if (params.id) {
-      // Update
+      update();
     } else {
       create();
     }
@@ -34,9 +35,45 @@ export default function Target() {
     try {
       await targetDB.create({ name, amount });
       console.log("Meta criada com sucesso!");
-      router.back()
+      router.back();
     } catch (error) {}
   }
+
+  async function fetchDetails(id: number) {
+    try {
+      const response = await targetDB.show(id);
+
+      if (!response) {
+        console.warn("response is not valid");
+        return;
+      }
+
+      setName(response.name);
+      setAmount(response.amount);
+    } catch (error) {
+      console.warn(error);
+    }
+  }
+
+  async function update() {
+    try {
+      await targetDB.update({ id: Number(params.id), name, amount });
+
+      return Alert.alert("Sucesso!", "Meta atualizada!", [
+        {
+          text: "Ok",
+          onPress: () => router.back(),
+        },
+      ]);
+    } catch (error) {
+      console.warn("Erro ao atualizar meta!");
+      setIsProcessing(false);
+    }
+  }
+
+  useEffect(() => {
+    fetchDetails(Number(params.id));
+  }, [params.id]);
 
   return (
     <View style={{ flex: 1, padding: 24 }}>
@@ -48,6 +85,7 @@ export default function Target() {
         <Input
           label="Nova meta"
           placeholder="Ex: Viagem para praia, Apple Watch"
+          value={name}
           onChangeText={setName}
         />
 
