@@ -86,7 +86,11 @@ export default function Index() {
   }
   return (
     <View style={{ flex: 1 }}>
-      <StatusBar barStyle="light-content" />
+      <StatusBar
+        translucent
+        backgroundColor="transparent"
+        barStyle="light-content"
+      />
       <HomeHeader data={summary} />
 
       <List

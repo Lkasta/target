@@ -4,7 +4,7 @@ import { StyleSheet } from "react-native";
 export const styles = StyleSheet.create({
   container: {
     width: "100%",
-    height: 324,
+    height: 250,
     paddingHorizontal: 24,
     justifyContent: "flex-end",
     paddingBottom: 18,

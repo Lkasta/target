@@ -53,8 +53,6 @@ export default function InProgress() {
     try {
       const response = await transactionsDB.listByTargetId(Number(params.id));
 
-      console.log(response);
-
       setTransactions(
         response.map((resp) => ({
           id: String(resp.id),
